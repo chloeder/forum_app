@@ -7,6 +7,8 @@ import (
 
 	"github.com/chloeder/forum_app/internal/configs"
 	"github.com/chloeder/forum_app/internal/handlers/memberships"
+	membershipsRepo "github.com/chloeder/forum_app/internal/repositories/memberships"
+	"github.com/chloeder/forum_app/pkg/internalsql"
 	"github.com/gin-gonic/gin"
 )
 
@@ -37,6 +39,15 @@ func main() {
 	cfg = configs.GetConfig()
 	// Log the configuration for debugging purposes
 	log.Printf("config: %v", cfg)
+
+	// Initialize the database connection
+	db, err := internalsql.Connect(cfg.Database.DataSourcesName)
+	if err != nil {
+		// If database connection fails, log the error and exit
+		log.Fatalf("failed to connect to the database: %v", err)
+	}
+
+	_ = membershipsRepo.NewRepository(db)
 
 	// Initialize membership handler with the router
 	membershipHandler := memberships.NewHandler(r)
