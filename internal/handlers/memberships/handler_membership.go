@@ -11,6 +11,7 @@ import (
 
 type membershipService interface {
 	SignUp(ctx context.Context, req *memberships.SignUpRequest) error
+	SignIn(ctx context.Context, req *memberships.SignInRequest) (string, error)
 }
 
 type Handler struct {
@@ -26,9 +27,10 @@ func NewHandler(api *gin.Engine, membershipService membershipService) *Handler {
 	}
 }
 
-func (h *Handler) RegisterRoute() {
+func (h *Handler) AuthenticationRoute() {
 	router := h.Group("/memberships")
 
 	router.GET("/register", h.Register)
 	router.POST("/signup", h.SignUp)
+	router.POST("/signin", h.SignIn)
 }

@@ -11,6 +11,7 @@ type (
 
 	Service struct {
 		Port string `mapstructure:"port"`
+		SecretJWT string `mapstructure:"secretJWT"`
 	}
 
 	Database struct {

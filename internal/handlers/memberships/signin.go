@@ -7,21 +7,24 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-
-func (h *Handler) SignUp (c *gin.Context){
+func (h *Handler) SignIn (c *gin.Context){
 	ctx := c.Request.Context()
 
-	var req memberships.SignUpRequest
+	var req memberships.SignInRequest
 	if err := c.ShouldBindJSON(&req); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
 
-	err := h.membershipService.SignUp(ctx, &req)
+	accessToken, err := h.membershipService.SignIn(ctx, &req)
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return
 	}
 
-	c.JSON(http.StatusCreated, gin.H{"message": "success"})
+	response := memberships.SignInResponse{
+		AccessToken: accessToken,
+	}
+
+	c.JSON(http.StatusOK, gin.H{"message": "success", "data": response})
 }

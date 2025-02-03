@@ -3,7 +3,6 @@ package memberships
 import (
 	"context"
 	"errors"
-	"log"
 	"time"
 
 	"github.com/chloeder/forum_app/internal/models/memberships"
@@ -26,7 +25,6 @@ func (s *service) SignUp(ctx context.Context, req *memberships.SignUpRequest) er
 	if err != nil {
 		return err
 	}
-	log.Println("hashedPassword: ", hashedPassword)
 
 	now := time.Now()
 

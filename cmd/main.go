@@ -38,8 +38,6 @@ func main() {
 
 	// Get the configuration instance
 	cfg = configs.GetConfig()
-	// Log the configuration for debugging purposes
-	log.Printf("config: %v", cfg)
 
 	// Initialize the database connection
 	db, err := internalsql.Connect(cfg.Database.DataSourcesName)
@@ -48,13 +46,15 @@ func main() {
 		log.Fatalf("failed to connect to the database: %v", err)
 	}
 
+	// Initialize membership repository with the database connection
 	membershipRepo := membershipsRepo.NewRepository(db)
-	membershipService := membershipsService.NewService(membershipRepo)
+	// Initialize membership service with the repository
+	membershipService := membershipsService.NewService(cfg, membershipRepo,)
 
 	// Initialize membership handler with the router
 	membershipHandler := memberships.NewHandler(r, membershipService)
 	// Register membership routes
-	membershipHandler.RegisterRoute()
+	membershipHandler.AuthenticationRoute()
 
 	// Start the server on the configured port
 	r.Run(cfg.Service.Port)

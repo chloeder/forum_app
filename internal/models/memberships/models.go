@@ -9,11 +9,22 @@ type (
 		Email    string `json:"email"`
 		Password string `json:"password"`
 	}
+
+	SignInRequest struct {
+		Email    string `json:"email"`
+		Password string `json:"password"`
+	}
+)
+
+type (
+	SignInResponse struct {
+		AccessToken string `json:"access_token"`
+	}
 )
 
 type (
 	UserModel struct {
-		ID       int `db:"id"`
+		ID       int64 `db:"id"`
 		Username string `db:"username"`
 		Name     string `db:"name"`
 		Email    string `db:"email"`
