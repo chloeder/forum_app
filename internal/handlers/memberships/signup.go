@@ -23,5 +23,5 @@ func (h *Handler) SignUp (c *gin.Context){
 		return
 	}
 
-	c.JSON(http.StatusCreated, gin.H{"message": "success"})
+	c.JSON(http.StatusCreated, gin.H{"message": "success", "data": req})
 }

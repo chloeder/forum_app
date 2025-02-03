@@ -2,4 +2,4 @@ service:
   port: ":8080"
 
 database:
-  dataSourcesName: "root:superSecretPassword@tcp(localhost:3308)/db_forum"
+  dataSourcesName: "root:superSecretPassword@tcp(localhost:3308)/db_forum?parseTime=true"
