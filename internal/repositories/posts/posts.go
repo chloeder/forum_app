@@ -28,7 +28,7 @@ func (r *repository) GetPosts (ctx context.Context, limit, offset int) ([]*posts
 	return responses, nil
 }
 
-func (r *repository) GetPostById (ctx context.Context, id int64) error {
+func (r *repository) GetPostById (ctx context.Context, id int64) (*posts.PostModel, error) {
 	query := `SELECT id, post_title, post_content, post_hastags, created_at, updated_at, created_by, updated_by FROM posts WHERE id = ?`
 
 	row := r.db.QueryRowContext(ctx, query, id)
@@ -36,10 +36,10 @@ func (r *repository) GetPostById (ctx context.Context, id int64) error {
 	var response posts.PostModel
 	err := row.Scan(&response.ID, &response.PostTitle, &response.PostContent, &response.PostHastags, &response.CreatedAt, &response.UpdatedAt, &response.CreatedBy, &response.UpdatedBy)
 	if err != nil {
-		return err
+		return nil, err
 	}
 
-	return nil
+	return &response, nil
 }
 
 func (r *repository) CreatePost (ctx context.Context, post *posts.PostModel) error {
