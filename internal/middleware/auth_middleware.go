@@ -24,13 +24,13 @@ func AuthMiddleware() gin.HandlerFunc {
 		}
 
 		// Check if the token is valid
-		userID, username, email, err := jwt.ValidateToken(header, secretKey)
+		user_id, username, email, err := jwt.ValidateToken(header, secretKey)
 		if err != nil {
 			c.AbortWithError(http.StatusUnauthorized, errors.New("invalid token"))
 		}
 
 		// Set the user ID, username, and email in the context
-		c.Set("userID", userID)
+		c.Set("user_id", user_id)
 		c.Set("username", username)
 		c.Set("email", email)
 		c.Next()

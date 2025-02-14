@@ -27,6 +27,7 @@ func NewHandler(api *gin.Engine, membershipService membershipService) *Handler {
 	}
 }
 
+// AuthenticationRoute registers all routes for authentication
 func (h *Handler) AuthenticationRoute() {
 	router := h.Group("/memberships")
 

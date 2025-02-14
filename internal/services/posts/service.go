@@ -10,7 +10,7 @@ type postRepository interface {
 	GetPosts (ctx context.Context, limit, offset int) ([]*posts.PostModel, error)
 	GetPostById (ctx context.Context, id int64) (*posts.PostModel, error)
 	CreatePost (ctx context.Context, post *posts.PostModel) error
-	UpdatePost (ctx context.Context, post *posts.PostModel) error
+	UpdatePost (ctx context.Context,id int64, post *posts.PostModel) error
 	DeletePost (ctx context.Context, id int64) error
 }
 

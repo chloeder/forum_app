@@ -7,8 +7,11 @@ import (
 
 	"github.com/chloeder/forum_app/internal/configs"
 	"github.com/chloeder/forum_app/internal/handlers/memberships"
+	"github.com/chloeder/forum_app/internal/handlers/posts"
 	membershipsRepo "github.com/chloeder/forum_app/internal/repositories/memberships"
+	postsRepo "github.com/chloeder/forum_app/internal/repositories/posts"
 	membershipsService "github.com/chloeder/forum_app/internal/services/memberships"
+	postsService "github.com/chloeder/forum_app/internal/services/posts"
 	"github.com/chloeder/forum_app/pkg/internalsql"
 	"github.com/gin-gonic/gin"
 )
@@ -46,15 +49,20 @@ func main() {
 		log.Fatalf("failed to connect to the database: %v", err)
 	}
 
-	// Initialize membership repository with the database connection
 	membershipRepo := membershipsRepo.NewRepository(db)
-	// Initialize membership service with the repository
-	membershipService := membershipsService.NewService(cfg, membershipRepo,)
-
-	// Initialize membership handler with the router
+	membershipService := membershipsService.NewService(cfg, membershipRepo)
 	membershipHandler := memberships.NewHandler(r, membershipService)
+
+
+	postRepo := postsRepo.NewRepository(db)
+	postService := postsService.NewService(postRepo)
+	postHandler := posts.NewHandler(r, postService)
+
 	// Register membership routes
 	membershipHandler.AuthenticationRoute()
+
+	// Register post routes
+	postHandler.PostRoute()
 
 	// Start the server on the configured port
 	r.Run(cfg.Service.Port)

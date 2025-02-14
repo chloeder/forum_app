@@ -8,6 +8,12 @@ type (
 		PostContent string `json:"post_content"`
 		PostHastags []string `json:"post_hastags"`
 	}
+
+	UpdatePostRequest struct {
+		PostTitle   *string `json:"post_title,omitempty"`
+		PostContent *string `json:"post_content,omitempty"`
+		PostHastags []string `json:"post_hastags,omitempty"`
+	}
 )
 
 type (
