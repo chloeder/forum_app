@@ -9,4 +9,4 @@ services:
       - MYSQL_ROOT_PASSWORD=superSecretPassword
       - MYSQL_DATABASE=db_forum
     volumes:
-      - /Users/ewa/Documents/Coding/Backend/GOLANG/forum-apps/mysql_db:/var/lib/mysql
+      - ./mysql_db:/var/lib/mysql

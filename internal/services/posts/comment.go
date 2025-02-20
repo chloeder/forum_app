@@ -11,8 +11,8 @@ import (
 
 
 
-func (s *service) GetCommentByPostID(ctx context.Context, postID int64, limit, offset int) ([]*posts.CommentModel, error) {
-	post, err := s.postRepo.GetCommentByPostID(ctx, postID, limit, offset)
+func (s *service) GetCommentsByPostId(ctx context.Context, postID int64, limit, offset int) ([]*posts.CommentModel, error) {
+	post, err := s.postRepo.GetCommentsByPostId(ctx, postID, limit, offset)
 	if err != nil {
 		return nil, err
 	}
