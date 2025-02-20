@@ -43,4 +43,7 @@ func (h *Handler) PostRoute(){
 	router.POST("/", h.CreatePost)
 	router.PATCH("/:id", h.UpdatePost)
 	router.DELETE("/:id", h.DeletePost)
+
+	router.GET("/:id/comments", h.GetCommentsByPostId)
+	router.POST("/:id/comments", h.CreateComment)
 }

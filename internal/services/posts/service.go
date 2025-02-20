@@ -12,7 +12,7 @@ type postRepository interface {
 	CreatePost (ctx context.Context, post *posts.PostModel) error
 	UpdatePost (ctx context.Context,id int64, post *posts.PostModel) error
 	DeletePost (ctx context.Context, id int64) error
-	GetCommentByPostID (ctx context.Context, postID int64, limit, offset int) ([]*posts.CommentModel, error)
+	GetCommentsByPostId (ctx context.Context, postID int64, limit, offset int) ([]*posts.CommentModel, error)
 	CreateComment (ctx context.Context, comment *posts.CommentModel) error
 }
 
