@@ -71,6 +71,13 @@ func (h *Handler) CreateComment(c *gin.Context) {
 		return
 	}
 
+	// Get post id from path
+	postID, err := strconv.Atoi(c.Param("id"))
+	if err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "invalid post id"})
+		return
+	}
+
 	// Bind request to struct
 	var req posts.CreateCommentRequest
 	if err := c.ShouldBindJSON(&req); err != nil {
@@ -79,7 +86,7 @@ func (h *Handler) CreateComment(c *gin.Context) {
 	}
 
 	// Create comment
-	err := h.postService.CreateComment(ctx, userID.(int64), &req)
+	err = h.postService.CreateComment(ctx, userID.(int64), int64(postID), &req)
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return

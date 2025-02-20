@@ -16,7 +16,7 @@ type postService interface {
 	DeletePost(ctx context.Context, id int64) error
 
 	GetCommentsByPostId(ctx context.Context, postID int64, limit, offset int) ([]*posts.CommentModel, error)
-	CreateComment(ctx context.Context, userID int64, req *posts.CreateCommentRequest) error
+	CreateComment(ctx context.Context, userID, postID int64, req *posts.CreateCommentRequest) error
 }
 
 type Handler struct {
