@@ -16,7 +16,6 @@ type (
 	}
 
 		CreateCommentRequest struct {
-		PostID  int64  `json:"post_id"`
 		Comment string `json:"comment"`
 	}
 )
@@ -37,6 +36,7 @@ type (
 		CommentModel struct {
 		ID        int64     `db:"id"`
 		PostID    int64     `db:"post_id"`
+		UserID    int64     `db:"user_id"`
 		Comment   string    `db:"comment"`
 		CreatedAt time.Time `db:"created_at"`
 		UpdatedAt time.Time    `db:"updated_at"`

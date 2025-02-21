@@ -3,6 +3,7 @@ package posts
 import (
 	"context"
 	"errors"
+	"log"
 	"strconv"
 	"time"
 
@@ -20,11 +21,12 @@ func (s *service) GetCommentsByPostId(ctx context.Context, postID int64, limit, 
 	return post, nil
 }
 
-func (s *service) CreateComment(ctx context.Context, userID int64, req *posts.CreateCommentRequest) error {
+func (s *service) CreateComment(ctx context.Context, userID int64, postID int64, req *posts.CreateCommentRequest) error {
 	time := time.Now()
 
 	comment := &posts.CommentModel{
-		PostID: req.PostID,
+		PostID: postID,
+		UserID: userID,
 		Comment: req.Comment,
 		CreatedAt: time,
 		UpdatedAt: time,
@@ -34,6 +36,7 @@ func (s *service) CreateComment(ctx context.Context, userID int64, req *posts.Cr
 
 	err := s.postRepo.CreateComment(ctx, comment)
 	if err != nil {
+		log.Println(err)
 		return errors.New("failed to create comment")
 	}
 
