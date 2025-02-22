@@ -15,8 +15,8 @@ type postService interface {
 	UpdatePost(ctx context.Context, id int64, req *posts.UpdatePostRequest) error
 	DeletePost(ctx context.Context, id int64) error
 
-	GetCommentsByPostId(ctx context.Context, postID int64, limit, offset int) ([]*posts.CommentModel, error)
-	CreateComment(ctx context.Context, userID, postID int64, req *posts.CreateCommentRequest) error
+	CreateComment(ctx context.Context, userID int64, postID int64, req *posts.CreateCommentRequest) error
+	LikedPost(ctx context.Context, postID int64, userID int64) error
 }
 
 type Handler struct {
@@ -34,7 +34,7 @@ func NewHandler(api *gin.Engine, postService postService) *Handler {
 }
 
 // PostRoute registers all routes for post handler
-func (h *Handler) PostRoute(){
+func (h *Handler) PostRoute() {
 	router := h.Group("/posts")
 	router.Use(middleware.AuthMiddleware())
 
@@ -44,6 +44,5 @@ func (h *Handler) PostRoute(){
 	router.PATCH("/:id", h.UpdatePost)
 	router.DELETE("/:id", h.DeletePost)
 
-	router.GET("/:id/comments", h.GetCommentsByPostId)
 	router.POST("/:id/comments", h.CreateComment)
 }
