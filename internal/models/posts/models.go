@@ -18,6 +18,10 @@ type (
 	CreateCommentRequest struct {
 		Comment string `json:"comment"`
 	}
+
+	UserActivityRequest struct {
+		IsLiked bool `json:"is_liked"`
+	}
 )
 
 type (

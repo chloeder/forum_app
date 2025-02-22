@@ -1,1 +1,1 @@
-ALTER TABLE IF EXISTS user_activies;
+ALTER TABLE IF EXISTS user_activities;

@@ -1,4 +1,4 @@
-CREATE TABLE IF NOT EXISTS user_activies (
+CREATE TABLE IF NOT EXISTS user_activities (
     id BIGINT AUTO_INCREMENT PRIMARY KEY,
     post_id BIGINT NOT NULL,
     user_id BIGINT NOT NULL,

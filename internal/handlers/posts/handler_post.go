@@ -16,7 +16,7 @@ type postService interface {
 	DeletePost(ctx context.Context, id int64) error
 
 	CreateComment(ctx context.Context, userID int64, postID int64, req *posts.CreateCommentRequest) error
-	LikedPost(ctx context.Context, postID int64, userID int64) error
+	LikedPost(ctx context.Context, postID int64, userID int64, req *posts.UserActivityRequest) error
 }
 
 type Handler struct {
@@ -45,4 +45,5 @@ func (h *Handler) PostRoute() {
 	router.DELETE("/:id", h.DeletePost)
 
 	router.POST("/:id/comments", h.CreateComment)
+	router.POST("/:id/likes", h.LikedPost)
 }
