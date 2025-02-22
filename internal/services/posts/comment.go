@@ -3,31 +3,19 @@ package posts
 import (
 	"context"
 	"errors"
-	"log"
 	"strconv"
 	"time"
 
 	"github.com/chloeder/forum_app/internal/models/posts"
 )
 
-
-
-func (s *service) GetCommentsByPostId(ctx context.Context, postID int64, limit, offset int) ([]*posts.CommentModel, error) {
-	post, err := s.postRepo.GetCommentsByPostId(ctx, postID, limit, offset)
-	if err != nil {
-		return nil, err
-	}
-
-	return post, nil
-}
-
 func (s *service) CreateComment(ctx context.Context, userID int64, postID int64, req *posts.CreateCommentRequest) error {
 	time := time.Now()
 
 	comment := &posts.CommentModel{
-		PostID: postID,
-		UserID: userID,
-		Comment: req.Comment,
+		PostID:    postID,
+		UserID:    userID,
+		Comment:   req.Comment,
 		CreatedAt: time,
 		UpdatedAt: time,
 		CreatedBy: strconv.FormatInt(userID, 10),
@@ -36,7 +24,6 @@ func (s *service) CreateComment(ctx context.Context, userID int64, postID int64,
 
 	err := s.postRepo.CreateComment(ctx, comment)
 	if err != nil {
-		log.Println(err)
 		return errors.New("failed to create comment")
 	}
 
