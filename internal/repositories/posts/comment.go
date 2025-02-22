@@ -7,7 +7,7 @@ import (
 )
 
 func (r *repository) GetCommentsByPostId(ctx context.Context, postID int64, limit, offset int) ([]*posts.CommentModel, error) {
-	query := `SELECT id, post_id, comment, created_at, updated_at, created_by, updated_by FROM comments WHERE post_id = ? LIMIT ? OFFSET ?`
+	query := `SELECT id, post_id, user_id, comment, created_at, updated_at, created_by, updated_by FROM comments WHERE post_id = ? LIMIT ? OFFSET ?`
 
 	rows, err := r.db.QueryContext(ctx, query, postID, limit, offset)
 	if err != nil {
@@ -18,7 +18,7 @@ func (r *repository) GetCommentsByPostId(ctx context.Context, postID int64, limi
 	var responses []*posts.CommentModel
 	for rows.Next() {
 		var response posts.CommentModel
-		err := rows.Scan(&response.ID, &response.PostID, &response.Comment, &response.CreatedAt, &response.UpdatedAt, &response.CreatedBy, &response.UpdatedBy)
+		err := rows.Scan(&response.ID, &response.PostID, &response.UserID, &response.Comment, &response.CreatedAt, &response.UpdatedAt, &response.CreatedBy, &response.UpdatedBy)
 		if err != nil {
 			return nil, err
 		}
